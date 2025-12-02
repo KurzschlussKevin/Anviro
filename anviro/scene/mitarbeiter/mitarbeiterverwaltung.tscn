@@ -1,0 +1,290 @@
+[gd_scene load_steps=10 format=3 uid="uid://u7iousoecjne"]
+
+[ext_resource type="PackedScene" uid="uid://cl08rs4umd7yi" path="res://utils/main_template.tscn" id="1_nhn5u"]
+[ext_resource type="Texture2D" uid="uid://chdxm7pq3rj8g" path="res://assets/icons/kreisbenutzer.png" id="2_lru44"]
+[ext_resource type="Texture2D" uid="uid://boxha6sllors6" path="res://assets/icons/umschlag.png" id="3_73wfj"]
+[ext_resource type="Texture2D" uid="uid://cubxe4jfoph50" path="res://assets/icons/anruf.png" id="4_kjnkt"]
+[ext_resource type="Texture2D" uid="uid://b1v5dp5spbltr" path="res://assets/icons/user/bleistift.png" id="5_rl2x7"]
+[ext_resource type="Texture2D" uid="uid://cyj23066lh80j" path="res://assets/icons/user/mull.png" id="7_ainlu"]
+[ext_resource type="Texture2D" uid="uid://cy4li6s6o3bkb" path="res://assets/icons/user/prufen.png" id="7_rl2x7"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cci7s"]
+bg_color = Color(0.3882353, 0.6117647, 0.8901961, 0.36078432)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 50
+corner_radius_top_right = 50
+corner_radius_bottom_right = 50
+corner_radius_bottom_left = 50
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_rl2x7"]
+
+[node name="Mitarbeiterverwaltung" instance=ExtResource("1_nhn5u")]
+
+[node name="SearchMitarbeiter" type="LineEdit" parent="." index="3"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.16822916
+anchor_top = 0.08055556
+anchor_right = 0.38489583
+anchor_bottom = 0.121296294
+theme_override_font_sizes/font_size = 26
+placeholder_text = "🔎Mitarbeiter suchen"
+metadata/_edit_use_anchors_ = true
+
+[node name="ScrollContainer" type="ScrollContainer" parent="." index="4"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.16822916
+anchor_top = 0.14351852
+anchor_right = 0.73333335
+anchor_bottom = 0.79537034
+offset_bottom = 6.1035156e-05
+horizontal_scroll_mode = 3
+vertical_scroll_mode = 3
+metadata/_edit_use_anchors_ = true
+metadata/_edit_group_ = true
+
+[node name="GridContainer" type="GridContainer" parent="ScrollContainer" index="0"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+columns = 2
+
+[node name="UserTemplate" type="PanelContainer" parent="ScrollContainer/GridContainer" index="0"]
+custom_minimum_size = Vector2(425, 180)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_cci7s")
+
+[node name="UserTemplate" type="Panel" parent="ScrollContainer/GridContainer/UserTemplate" index="0"]
+visible = false
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_rl2x7")
+
+[node name="Mitarbeiterbild" type="TextureRect" parent="ScrollContainer/GridContainer/UserTemplate/UserTemplate" index="0"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.049411736
+anchor_top = 0.116666794
+anchor_right = 0.13944764
+anchor_bottom = 0.33388668
+texture = ExtResource("2_lru44")
+expand_mode = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Mitarbeitername" type="Label" parent="ScrollContainer/GridContainer/UserTemplate/UserTemplate" index="1"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.18117651
+anchor_top = 0.11666671
+anchor_right = 0.5647059
+anchor_bottom = 0.24444453
+theme_override_font_sizes/font_size = 16
+text = "Nachname, Vorname"
+metadata/_edit_use_anchors_ = true
+
+[node name="Rolle" type="Label" parent="ScrollContainer/GridContainer/UserTemplate/UserTemplate" index="2"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.18117651
+anchor_top = 0.20555551
+anchor_right = 0.44000003
+anchor_bottom = 0.33333328
+text = "Position: Rolle"
+metadata/_edit_use_anchors_ = true
+
+[node name="Email" type="Label" parent="ScrollContainer/GridContainer/UserTemplate/UserTemplate" index="3"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.12705882
+anchor_top = 0.3944444
+anchor_right = 0.75529414
+anchor_bottom = 0.52222216
+text = "E-Mail: mustermann@sfc-group.de"
+metadata/_edit_use_anchors_ = true
+
+[node name="Mobilenummer" type="Label" parent="ScrollContainer/GridContainer/UserTemplate/UserTemplate" index="4"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.12705882
+anchor_top = 0.5722223
+anchor_right = 0.48705882
+anchor_bottom = 0.7000001
+text = "Mobile: 0123456789"
+metadata/_edit_use_anchors_ = true
+
+[node name="IconEmail" type="TextureRect" parent="ScrollContainer/GridContainer/UserTemplate/UserTemplate" index="5"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.05176468
+anchor_top = 0.3944444
+anchor_right = 0.10823527
+anchor_bottom = 0.52777773
+texture = ExtResource("3_73wfj")
+metadata/_edit_use_anchors_ = true
+
+[node name="IconMobile" type="TextureRect" parent="ScrollContainer/GridContainer/UserTemplate/UserTemplate" index="6"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.05176468
+anchor_top = 0.5722221
+anchor_right = 0.10823527
+anchor_bottom = 0.7055556
+texture = ExtResource("4_kjnkt")
+metadata/_edit_use_anchors_ = true
+
+[node name="Settings" type="Button" parent="ScrollContainer/GridContainer/UserTemplate/UserTemplate" index="7"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.71058816
+anchor_top = 0.6611112
+anchor_right = 0.8047058
+anchor_bottom = 0.88333344
+icon = ExtResource("5_rl2x7")
+metadata/_edit_use_anchors_ = true
+
+[node name="Delete" type="Button" parent="ScrollContainer/GridContainer/UserTemplate/UserTemplate" index="8"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.842353
+anchor_top = 0.6611112
+anchor_right = 0.9364707
+anchor_bottom = 0.88333344
+icon = ExtResource("7_ainlu")
+metadata/_edit_use_anchors_ = true
+
+[node name="UserSettingsTemplate" type="Panel" parent="ScrollContainer/GridContainer/UserTemplate" index="1"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_rl2x7")
+
+[node name="Mitarbeiterbild" type="TextureRect" parent="ScrollContainer/GridContainer/UserTemplate/UserSettingsTemplate" index="0"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.049411736
+anchor_top = 0.116666794
+anchor_right = 0.1370947
+anchor_bottom = 0.32277572
+texture = ExtResource("2_lru44")
+expand_mode = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Nachname" type="LineEdit" parent="ScrollContainer/GridContainer/UserTemplate/UserSettingsTemplate" index="1"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.21882352
+anchor_top = 0.1166668
+anchor_right = 0.53718853
+anchor_bottom = 0.2555557
+theme_override_font_sizes/font_size = 12
+placeholder_text = "Nachname"
+metadata/_edit_use_anchors_ = true
+
+[node name="Vorname" type="LineEdit" parent="ScrollContainer/GridContainer/UserTemplate/UserSettingsTemplate" index="2"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5576471
+anchor_top = 0.1166668
+anchor_right = 0.87764704
+anchor_bottom = 0.2555557
+theme_override_font_sizes/font_size = 12
+placeholder_text = "Vorname"
+metadata/_edit_use_anchors_ = true
+
+[node name="Position_Rollen" type="OptionButton" parent="ScrollContainer/GridContainer/UserTemplate/UserSettingsTemplate" index="3"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.21882352
+anchor_top = 0.2944444
+anchor_right = 0.55744785
+anchor_bottom = 0.43333328
+theme_override_font_sizes/font_size = 12
+selected = 0
+item_count = 6
+popup/item_0/text = "Position: Rolle"
+popup/item_0/id = 0
+popup/item_0/separator = true
+popup/item_1/text = "Leser"
+popup/item_1/id = 1
+popup/item_2/text = "Prüfer"
+popup/item_2/id = 2
+popup/item_3/text = "Teamleiter"
+popup/item_3/id = 3
+popup/item_4/text = "BackOffice"
+popup/item_4/id = 4
+popup/item_5/text = "Administrator"
+popup/item_5/id = 5
+metadata/_edit_use_anchors_ = true
+
+[node name="Email" type="LineEdit" parent="ScrollContainer/GridContainer/UserTemplate/UserSettingsTemplate" index="4"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.21882352
+anchor_top = 0.5611112
+anchor_right = 0.74588233
+anchor_bottom = 0.7000001
+theme_override_font_sizes/font_size = 12
+placeholder_text = "E-Mail"
+metadata/_edit_use_anchors_ = true
+
+[node name="Mobilenummer" type="LineEdit" parent="ScrollContainer/GridContainer/UserTemplate/UserSettingsTemplate" index="5"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.21882352
+anchor_top = 0.7388888
+anchor_right = 0.74588233
+anchor_bottom = 0.8777777
+theme_override_font_sizes/font_size = 12
+placeholder_text = "Mobilenummer"
+metadata/_edit_use_anchors_ = true
+
+[node name="Annehmen" type="Button" parent="ScrollContainer/GridContainer/UserTemplate/UserSettingsTemplate" index="6"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.8964704
+anchor_top = 0.7388888
+anchor_right = 0.9493805
+anchor_bottom = 0.875059
+icon = ExtResource("7_rl2x7")
+expand_icon = true
+metadata/_edit_use_anchors_ = true
+
+[node name="UserDeleteTemplate" type="Panel" parent="ScrollContainer/GridContainer/UserTemplate" index="2"]
+visible = false
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_rl2x7")
+
+[node name="Yes" type="Button" parent="ScrollContainer/GridContainer/UserTemplate/UserDeleteTemplate" index="0"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.22045855
+anchor_top = 0.50212765
+anchor_right = 0.44620812
+anchor_bottom = 0.69787234
+text = "Ja"
+expand_icon = true
+metadata/_edit_use_anchors_ = true
+
+[node name="No" type="Button" parent="ScrollContainer/GridContainer/UserTemplate/UserDeleteTemplate" index="1"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.55908287
+anchor_top = 0.50212765
+anchor_right = 0.7848325
+anchor_bottom = 0.69787234
+text = "Nein"
+expand_icon = true
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="ScrollContainer/GridContainer/UserTemplate/UserDeleteTemplate" index="2"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.049411796
+anchor_top = 0.11666666
+anchor_right = 0.9347734
+anchor_bottom = 0.2613475
+grow_horizontal = 2
+text = "Möchten Sie wirklich den Account Löschen?"
+metadata/_edit_use_anchors_ = true

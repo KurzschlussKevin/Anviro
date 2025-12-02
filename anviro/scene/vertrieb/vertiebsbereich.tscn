@@ -1,0 +1,466 @@
+[gd_scene load_steps=4 format=3 uid="uid://8cwtxhcmyfyi"]
+
+[ext_resource type="PackedScene" uid="uid://cl08rs4umd7yi" path="res://utils/main_template.tscn" id="1_d3cbh"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_d3cbh"]
+bg_color = Color(0.3882353, 0.6117647, 0.8901961, 0.36078432)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 50
+corner_radius_top_right = 50
+corner_radius_bottom_right = 50
+corner_radius_bottom_left = 50
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_3isbb"]
+
+[node name="Vertiebsbereich" instance=ExtResource("1_d3cbh")]
+
+[node name="KundenTemplate" type="PanelContainer" parent="." index="3"]
+custom_minimum_size = Vector2(448, 416)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.175
+anchor_top = 0.043518517
+anchor_right = 0.62135416
+anchor_bottom = 0.4287037
+theme_override_styles/panel = SubResource("StyleBoxFlat_d3cbh")
+metadata/_edit_use_anchors_ = true
+
+[node name="KundenTemplate" type="Panel" parent="KundenTemplate" index="0"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_3isbb")
+
+[node name="Kundenname" type="HBoxContainer" parent="KundenTemplate/KundenTemplate" index="0"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.08371041
+anchor_top = 0.090243906
+anchor_right = 0.4947121
+anchor_bottom = 0.15121952
+metadata/_edit_use_anchors_ = true
+
+[node name="Lable" type="Label" parent="KundenTemplate/KundenTemplate/Kundenname" index="0"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+text = "Firma:"
+metadata/_edit_use_anchors_ = true
+
+[node name="LineEdit" type="LineEdit" parent="KundenTemplate/KundenTemplate/Kundenname" index="1"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 12
+emoji_menu_enabled = false
+drag_and_drop_selection_enabled = false
+
+[node name="Kundennummer" type="HBoxContainer" parent="KundenTemplate/KundenTemplate" index="1"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.08371041
+anchor_top = 0.16829269
+anchor_right = 0.4947121
+anchor_bottom = 0.2292683
+metadata/_edit_use_anchors_ = true
+
+[node name="Lable" type="Label" parent="KundenTemplate/KundenTemplate/Kundennummer" index="0"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+text = "Kundennr.:"
+metadata/_edit_use_anchors_ = true
+
+[node name="LineEdit" type="LineEdit" parent="KundenTemplate/KundenTemplate/Kundennummer" index="1"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 12
+emoji_menu_enabled = false
+drag_and_drop_selection_enabled = false
+
+[node name="Kundenplz" type="HBoxContainer" parent="KundenTemplate/KundenTemplate" index="2"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.08371041
+anchor_top = 0.24634147
+anchor_right = 0.21269095
+anchor_bottom = 0.30731708
+metadata/_edit_use_anchors_ = true
+
+[node name="Lable" type="Label" parent="KundenTemplate/KundenTemplate/Kundenplz" index="0"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+text = "PLZ:"
+metadata/_edit_use_anchors_ = true
+
+[node name="LineEdit" type="LineEdit" parent="KundenTemplate/KundenTemplate/Kundenplz" index="1"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 12
+alignment = 1
+emoji_menu_enabled = false
+drag_and_drop_selection_enabled = false
+
+[node name="Kundenstadt" type="HBoxContainer" parent="KundenTemplate/KundenTemplate" index="3"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.23149233
+anchor_top = 0.24634147
+anchor_right = 0.49471205
+anchor_bottom = 0.30731708
+metadata/_edit_use_anchors_ = true
+
+[node name="Lable" type="Label" parent="KundenTemplate/KundenTemplate/Kundenstadt" index="0"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+text = "Stadt:"
+metadata/_edit_use_anchors_ = true
+
+[node name="LineEdit" type="LineEdit" parent="KundenTemplate/KundenTemplate/Kundenstadt" index="1"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 12
+emoji_menu_enabled = false
+drag_and_drop_selection_enabled = false
+
+[node name="Kundenhausnummer" type="HBoxContainer" parent="KundenTemplate/KundenTemplate" index="4"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.08371041
+anchor_top = 0.32439023
+anchor_right = 0.25029376
+anchor_bottom = 0.38536584
+metadata/_edit_use_anchors_ = true
+
+[node name="Lable" type="Label" parent="KundenTemplate/KundenTemplate/Kundenhausnummer" index="0"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+text = "Hausnr.:"
+metadata/_edit_use_anchors_ = true
+
+[node name="LineEdit" type="LineEdit" parent="KundenTemplate/KundenTemplate/Kundenhausnummer" index="1"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 12
+alignment = 1
+emoji_menu_enabled = false
+drag_and_drop_selection_enabled = false
+
+[node name="Kundenstrasse" type="HBoxContainer" parent="KundenTemplate/KundenTemplate" index="5"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.26909515
+anchor_top = 0.32439023
+anchor_right = 0.5793184
+anchor_bottom = 0.38536584
+metadata/_edit_use_anchors_ = true
+
+[node name="Lable" type="Label" parent="KundenTemplate/KundenTemplate/Kundenstrasse" index="0"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+text = "Straße:"
+metadata/_edit_use_anchors_ = true
+
+[node name="LineEdit" type="LineEdit" parent="KundenTemplate/KundenTemplate/Kundenstrasse" index="1"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 12
+emoji_menu_enabled = false
+drag_and_drop_selection_enabled = false
+
+[node name="KundenEmail" type="HBoxContainer" parent="KundenTemplate/KundenTemplate" index="6"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.08371041
+anchor_top = 0.4804878
+anchor_right = 0.42890716
+anchor_bottom = 0.54146343
+metadata/_edit_use_anchors_ = true
+
+[node name="Lable" type="Label" parent="KundenTemplate/KundenTemplate/KundenEmail" index="0"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+text = "E-Mail:"
+metadata/_edit_use_anchors_ = true
+
+[node name="LineEdit" type="LineEdit" parent="KundenTemplate/KundenTemplate/KundenEmail" index="1"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 12
+emoji_menu_enabled = false
+drag_and_drop_selection_enabled = false
+
+[node name="KundenTelefon" type="HBoxContainer" parent="KundenTemplate/KundenTemplate" index="7"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.08371041
+anchor_top = 0.5585366
+anchor_right = 0.42890716
+anchor_bottom = 0.61951226
+metadata/_edit_use_anchors_ = true
+
+[node name="Lable" type="Label" parent="KundenTemplate/KundenTemplate/KundenTelefon" index="0"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+text = "Telefon:"
+metadata/_edit_use_anchors_ = true
+
+[node name="LineEdit" type="LineEdit" parent="KundenTemplate/KundenTemplate/KundenTelefon" index="1"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 12
+emoji_menu_enabled = false
+drag_and_drop_selection_enabled = false
+
+[node name="KundenMobile" type="HBoxContainer" parent="KundenTemplate/KundenTemplate" index="8"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.08371041
+anchor_top = 0.63658535
+anchor_right = 0.42890716
+anchor_bottom = 0.697561
+metadata/_edit_use_anchors_ = true
+
+[node name="Lable" type="Label" parent="KundenTemplate/KundenTemplate/KundenMobile" index="0"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+text = "Mobile:"
+metadata/_edit_use_anchors_ = true
+
+[node name="LineEdit" type="LineEdit" parent="KundenTemplate/KundenTemplate/KundenMobile" index="1"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 12
+emoji_menu_enabled = false
+drag_and_drop_selection_enabled = false
+
+[node name="KundenSpeichern" type="Button" parent="KundenTemplate/KundenTemplate" index="9"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.4024677
+anchor_top = 0.8073171
+anchor_right = 0.59753233
+anchor_bottom = 0.93414634
+grow_horizontal = 2
+grow_vertical = 0
+text = "Nur Kunde Speichern"
+metadata/_edit_use_anchors_ = true
+
+[node name="KundenAPNamen" type="HBoxContainer" parent="KundenTemplate/KundenTemplate" index="10"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.08371041
+anchor_top = 0.40487805
+anchor_right = 0.52291423
+anchor_bottom = 0.46585366
+metadata/_edit_use_anchors_ = true
+
+[node name="Lable" type="Label" parent="KundenTemplate/KundenTemplate/KundenAPNamen" index="0"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+text = "Ansprechspartner:"
+metadata/_edit_use_anchors_ = true
+
+[node name="LineEdit" type="LineEdit" parent="KundenTemplate/KundenTemplate/KundenAPNamen" index="1"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 12
+emoji_menu_enabled = false
+drag_and_drop_selection_enabled = false
+
+[node name="PanelContainer" type="PanelContainer" parent="." index="4"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.1765625
+anchor_top = 0.50277776
+anchor_right = 0.9791667
+anchor_bottom = 0.9638889
+metadata/_edit_use_anchors_ = true
+
+[node name="VSplitContainer" type="VSplitContainer" parent="PanelContainer" index="0"]
+layout_mode = 2
+split_offset = 50
+
+[node name="Panel" type="Panel" parent="PanelContainer/VSplitContainer" index="0"]
+layout_mode = 2
+
+[node name="Position" type="Label" parent="PanelContainer/VSplitContainer/Panel" index="0"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.01687216
+anchor_top = 0.26
+anchor_right = 0.057754707
+anchor_bottom = 0.72
+text = "Position"
+metadata/_edit_use_anchors_ = true
+
+[node name="Bezeichnung" type="Label" parent="PanelContainer/VSplitContainer/Panel" index="1"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.3530175
+anchor_top = 0.26
+anchor_right = 0.4172615
+anchor_bottom = 0.72
+text = "Bezeichnung"
+metadata/_edit_use_anchors_ = true
+
+[node name="Gruppe" type="Label" parent="PanelContainer/VSplitContainer/Panel" index="2"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.73264116
+anchor_top = 0.26
+anchor_right = 0.77027905
+anchor_bottom = 0.72
+text = "Gruppe"
+metadata/_edit_use_anchors_ = true
+
+[node name="Menge" type="Label" parent="PanelContainer/VSplitContainer/Panel" index="3"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.8027255
+anchor_top = 0.26
+anchor_right = 0.83711874
+anchor_bottom = 0.72
+text = "Menge"
+metadata/_edit_use_anchors_ = true
+
+[node name="Einzelpreis" type="Label" parent="PanelContainer/VSplitContainer/Panel" index="4"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.85723555
+anchor_top = 0.26
+anchor_right = 0.9117456
+anchor_bottom = 0.72
+text = "Einzelpreis"
+metadata/_edit_use_anchors_ = true
+
+[node name="Gesamt" type="Label" parent="PanelContainer/VSplitContainer/Panel" index="5"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.9383517
+anchor_top = 0.26
+anchor_right = 0.9792343
+anchor_bottom = 0.72
+text = "Gesamt"
+metadata/_edit_use_anchors_ = true
+
+[node name="ScrollContainer" type="ScrollContainer" parent="PanelContainer/VSplitContainer" index="1"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/VSplitContainer/ScrollContainer" index="0"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="PositionTemplate" type="Panel" parent="PanelContainer/VSplitContainer/ScrollContainer/VBoxContainer" index="0"]
+custom_minimum_size = Vector2(0, 50)
+layout_direction = 1
+layout_mode = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="Position" type="LineEdit" parent="PanelContainer/VSplitContainer/ScrollContainer/VBoxContainer/PositionTemplate" index="0"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.014276443
+anchor_top = 0.18
+anchor_right = 0.06035042
+anchor_bottom = 0.8
+placeholder_text = "Position"
+metadata/_edit_use_anchors_ = true
+
+[node name="Bezeichnung" type="LineEdit" parent="PanelContainer/VSplitContainer/ScrollContainer/VBoxContainer/PositionTemplate" index="1"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.08565866
+anchor_top = 0.18
+anchor_right = 0.6846204
+anchor_bottom = 0.8
+placeholder_text = "Bezeichnung"
+alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Gruppe" type="OptionButton" parent="PanelContainer/VSplitContainer/ScrollContainer/VBoxContainer/PositionTemplate" index="2"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.72160935
+anchor_top = 0.18
+anchor_right = 0.79234266
+anchor_bottom = 0.8
+alignment = 1
+selected = 0
+item_count = 9
+popup/item_0/text = "Gruppe"
+popup/item_0/id = 0
+popup/item_0/separator = true
+popup/item_1/text = "A"
+popup/item_1/id = 1
+popup/item_2/text = "B"
+popup/item_2/id = 2
+popup/item_3/text = "C"
+popup/item_3/id = 3
+popup/item_4/text = "D"
+popup/item_4/id = 4
+popup/item_5/text = "E"
+popup/item_5/id = 5
+popup/item_6/text = "F"
+popup/item_6/id = 6
+popup/item_7/text = "G"
+popup/item_7/id = 7
+popup/item_8/text = "H"
+popup/item_8/id = 8
+metadata/_edit_use_anchors_ = true
+
+[node name="Menge" type="LineEdit" parent="PanelContainer/VSplitContainer/ScrollContainer/VBoxContainer/PositionTemplate" index="3"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.79948086
+anchor_top = 0.18
+anchor_right = 0.84397304
+anchor_bottom = 0.8
+placeholder_text = "Menge"
+metadata/_edit_use_anchors_ = true
+
+[node name="Einzelpreis" type="LineEdit" parent="PanelContainer/VSplitContainer/ScrollContainer/VBoxContainer/PositionTemplate" index="4"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.8546398
+anchor_top = 0.18
+anchor_right = 0.9247242
+anchor_bottom = 0.8
+placeholder_text = "Einzelpreis"
+metadata/_edit_use_anchors_ = true
+
+[node name="Gesamt" type="LineEdit" parent="PanelContainer/VSplitContainer/ScrollContainer/VBoxContainer/PositionTemplate" index="5"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.935756
+anchor_top = 0.18
+anchor_right = 0.98284394
+anchor_bottom = 0.8
+placeholder_text = "Gesamt"
+metadata/_edit_use_anchors_ = true
+
+[node name="KundenSpeichern" type="Button" parent="." index="5"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.7828125
+anchor_top = 0.20092593
+anchor_right = 0.9778772
+anchor_bottom = 0.32775518
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_font_sizes/font_size = 25
+text = "Speichern"
+metadata/_edit_use_anchors_ = true
+
+[node name="NeuePosition" type="Button" parent="." index="6"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.7828125
+anchor_top = 0.35092592
+anchor_right = 0.9778772
+anchor_bottom = 0.47775516
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_font_sizes/font_size = 25
+text = "Neue Position hinzufügen"
+metadata/_edit_use_anchors_ = true

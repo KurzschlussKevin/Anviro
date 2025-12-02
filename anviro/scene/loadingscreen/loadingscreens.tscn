@@ -1,0 +1,46 @@
+[gd_scene load_steps=3 format=3 uid="uid://cjgyt5qsgaf47"]
+
+[ext_resource type="Script" uid="uid://cjn6n7dd05hh7" path="res://scene/loadingscreen/loadingscreens.gd" id="1_2qg3s"]
+[ext_resource type="Texture2D" uid="uid://bpyawxscth4iq" path="res://assets/test.jpg" id="1_o7cxf"]
+
+[node name="Loadingscreens" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_2qg3s")
+
+[node name="Background" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_o7cxf")
+expand_mode = 1
+
+[node name="loadinginfo" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.44479167
+anchor_top = 0.94074076
+anchor_right = 0.5552083
+anchor_bottom = 0.962963
+grow_horizontal = 2
+grow_vertical = 0
+text = "loadinginfos...."
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Loadingbar" type="ProgressBar" parent="."]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -40.0
+grow_horizontal = 2
+grow_vertical = 0

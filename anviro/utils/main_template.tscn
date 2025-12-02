@@ -1,0 +1,189 @@
+[gd_scene load_steps=11 format=3 uid="uid://cl08rs4umd7yi"]
+
+[ext_resource type="Texture2D" uid="uid://bpyawxscth4iq" path="res://assets/test.jpg" id="1_poh2f"]
+[ext_resource type="Texture2D" uid="uid://chdxm7pq3rj8g" path="res://assets/icons/kreisbenutzer.png" id="2_eacsa"]
+[ext_resource type="Texture2D" uid="uid://b5v8gt0vqj5li" path="res://assets/icons/kreuz.png" id="3_cyks8"]
+[ext_resource type="Texture2D" uid="uid://7i5fgkglwaij" path="res://assets/icons/heim.png" id="3_sib8m"]
+[ext_resource type="Texture2D" uid="uid://bshnb31vevghg" path="res://assets/icons/benutzer-alt.png" id="4_cyks8"]
+[ext_resource type="Texture2D" uid="uid://d1hu0xhkym4eb" path="res://assets/icons/benutzer-hinzufugen.png" id="5_2fsbo"]
+[ext_resource type="Texture2D" uid="uid://ddn6aelmo1gd2" path="res://assets/icons/einkaufstasche.png" id="6_kwtln"]
+[ext_resource type="Texture2D" uid="uid://bmel4bifldxoq" path="res://assets/icons/rechnung-einreichen.png" id="7_unwu2"]
+[ext_resource type="Texture2D" uid="uid://dy0nodsdhb41j" path="res://assets/icons/einstellungen.png" id="8_xihd3"]
+
+[sub_resource type="SystemFont" id="SystemFont_eacsa"]
+font_names = PackedStringArray("Impact")
+subpixel_positioning = 0
+
+[node name="Main_Template" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Background" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_poh2f")
+expand_mode = 1
+
+[node name="Personalinfos" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.825
+anchor_top = 0.014814815
+anchor_right = 0.9916667
+anchor_bottom = 0.08888889
+grow_horizontal = 0
+metadata/_edit_use_anchors_ = true
+
+[node name="Personalbild" type="TextureRect" parent="Personalinfos"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.025
+anchor_top = 0.1
+anchor_right = 0.225
+anchor_bottom = 0.9
+texture = ExtResource("2_eacsa")
+metadata/_edit_use_anchors_ = true
+
+[node name="Username" type="Label" parent="Personalinfos"]
+layout_mode = 0
+anchor_left = 0.275
+anchor_top = 0.1
+anchor_right = 0.975
+anchor_bottom = 0.3875
+text = "users.username"
+metadata/_edit_use_anchors_ = true
+
+[node name="Rolle" type="Label" parent="Personalinfos"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.275
+anchor_top = 0.6
+anchor_right = 0.975
+anchor_bottom = 0.8875
+text = "rollen.rollen_id"
+metadata/_edit_use_anchors_ = true
+
+[node name="UserInfos" type="Panel" parent="Personalinfos"]
+visible = false
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 3.7
+metadata/_edit_use_anchors_ = true
+
+[node name="LogOut" type="Button" parent="Personalinfos/UserInfos"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.2359375
+anchor_top = 0.8074324
+anchor_right = 0.7640625
+anchor_bottom = 0.9358108
+grow_horizontal = 2
+grow_vertical = 0
+text = "Ausloggen"
+metadata/_edit_use_anchors_ = true
+
+[node name="Close" type="Button" parent="Personalinfos/UserInfos"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.925
+anchor_right = 1.0
+anchor_bottom = 0.08108108
+grow_horizontal = 0
+icon = ExtResource("3_cyks8")
+metadata/_edit_use_anchors_ = true
+
+[node name="SideBoard" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 0.15104167
+anchor_bottom = 1.0
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="VSplitContainer" type="VSplitContainer" parent="SideBoard"]
+layout_mode = 2
+split_offset = 120
+dragging_enabled = false
+
+[node name="Panel" type="Panel" parent="SideBoard/VSplitContainer"]
+layout_mode = 2
+
+[node name="Softwarename" type="Label" parent="SideBoard/VSplitContainer/Panel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.058
+anchor_top = 0.06647399
+anchor_right = 0.942
+anchor_bottom = 0.458474
+offset_bottom = -31.526024
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0.26666668, 0.2901961, 1, 1)
+theme_override_fonts/font = SubResource("SystemFont_eacsa")
+theme_override_font_sizes/font_size = 80
+text = "ANVIRO"
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="SideBoard/VSplitContainer/Panel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.01724138
+anchor_top = 0.8833333
+anchor_right = 0.26551723
+anchor_bottom = 0.98333335
+theme_override_font_sizes/font_size = 8
+text = "Version: pre0.01"
+metadata/_edit_use_anchors_ = true
+
+[node name="MarginContainer" type="MarginContainer" parent="SideBoard/VSplitContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_right = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="SideBoard/VSplitContainer/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 5
+
+[node name="Dashboard" type="Button" parent="SideBoard/VSplitContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Dashboard"
+icon = ExtResource("3_sib8m")
+
+[node name="Kundenverwaltung" type="Button" parent="SideBoard/VSplitContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Kundenverwaltung"
+icon = ExtResource("4_cyks8")
+
+[node name="Mitarbeiterverwaltung" type="Button" parent="SideBoard/VSplitContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Mitarbeiterverwaltung"
+icon = ExtResource("5_2fsbo")
+
+[node name="Vertriebsbereich" type="Button" parent="SideBoard/VSplitContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Vertriebsbereich"
+icon = ExtResource("6_kwtln")
+
+[node name="Montagebericht" type="Button" parent="SideBoard/VSplitContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Montagebericht"
+icon = ExtResource("7_unwu2")
+
+[node name="Export" type="Button" parent="SideBoard/VSplitContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Export"
+icon = ExtResource("7_unwu2")
+
+[node name="Administrator" type="Button" parent="SideBoard/VSplitContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Administrator"
+icon = ExtResource("8_xihd3")

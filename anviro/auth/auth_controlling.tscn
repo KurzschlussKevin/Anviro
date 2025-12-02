@@ -1,0 +1,316 @@
+[gd_scene load_steps=9 format=3 uid="uid://dip1rx5vi87xv"]
+
+[ext_resource type="Texture2D" uid="uid://bpyawxscth4iq" path="res://assets/test.jpg" id="1_usn03"]
+[ext_resource type="Texture2D" uid="uid://brf7w3dun03m2" path="res://assets/icons/benutzer.png" id="2_8pku0"]
+[ext_resource type="Script" uid="uid://cuvh0hovgi4mq" path="res://auth/register.gd" id="2_qrnjm"]
+[ext_resource type="Texture2D" uid="uid://boxha6sllors6" path="res://assets/icons/umschlag.png" id="3_u0mwq"]
+[ext_resource type="Texture2D" uid="uid://cubxe4jfoph50" path="res://assets/icons/anruf.png" id="4_qrnjm"]
+[ext_resource type="Texture2D" uid="uid://b31cythinm6pr" path="res://assets/icons/sperren.png" id="5_n11dv"]
+[ext_resource type="Script" uid="uid://uekrddoa3r0t" path="res://auth/login.gd" id="7_n11dv"]
+
+[sub_resource type="SystemFont" id="SystemFont_u0mwq"]
+font_names = PackedStringArray("Impact")
+
+[node name="AuthControlling" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Background" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_usn03")
+expand_mode = 1
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.21197917
+anchor_top = 0.17962962
+anchor_right = 0.78802085
+anchor_bottom = 0.8203704
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="register" type="HSplitContainer" parent="PanelContainer"]
+layout_mode = 2
+split_offset = 500
+script = ExtResource("2_qrnjm")
+
+[node name="Info" type="Panel" parent="PanelContainer/register"]
+layout_mode = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="Login" type="Button" parent="PanelContainer/register/Info"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.267
+anchor_top = 0.7369942
+anchor_right = 0.733
+anchor_bottom = 0.8265896
+grow_horizontal = 2
+grow_vertical = 2
+text = "Anmelden"
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="PanelContainer/register/Info"]
+layout_mode = 0
+anchor_left = 0.274
+anchor_top = 0.69075143
+anchor_right = 0.738
+anchor_bottom = 0.7239884
+offset_bottom = 3.0517578e-05
+text = "Du hast bereits ein Konto?"
+horizontal_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Softwarename" type="Label" parent="PanelContainer/register/Info"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.058
+anchor_top = 0.06647399
+anchor_right = 0.942
+anchor_bottom = 0.33236995
+offset_bottom = -1.5258789e-05
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0.26666668, 0.2901961, 1, 1)
+theme_override_fonts/font = SubResource("SystemFont_u0mwq")
+theme_override_font_sizes/font_size = 150
+text = "ANVIRO"
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="authregister" type="Panel" parent="PanelContainer/register"]
+layout_mode = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="Anrede" type="OptionButton" parent="PanelContainer/register/authregister"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.04208754
+anchor_top = 0.15895954
+anchor_right = 0.27104378
+anchor_bottom = 0.20520231
+selected = 0
+item_count = 4
+popup/item_0/text = "Anrede"
+popup/item_0/id = 0
+popup/item_0/separator = true
+popup/item_1/text = "Herr"
+popup/item_1/id = 1
+popup/item_2/text = "Frau"
+popup/item_2/id = 2
+popup/item_3/text = "Divers"
+popup/item_3/id = 3
+metadata/_edit_use_anchors_ = true
+
+[node name="Vorname" type="LineEdit" parent="PanelContainer/register/authregister"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.28451177
+anchor_top = 0.15895954
+anchor_right = 0.6077441
+anchor_bottom = 0.20520231
+placeholder_text = "Vorname"
+right_icon = ExtResource("2_8pku0")
+metadata/_edit_use_anchors_ = true
+
+[node name="Nachname" type="LineEdit" parent="PanelContainer/register/authregister"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.6212121
+anchor_top = 0.15895954
+anchor_right = 0.9444444
+anchor_bottom = 0.20375723
+placeholder_text = "Nachname"
+right_icon = ExtResource("2_8pku0")
+metadata/_edit_use_anchors_ = true
+
+[node name="Benutzername" type="LineEdit" parent="PanelContainer/register/authregister"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.28451177
+anchor_top = 0.2283237
+anchor_right = 0.6077441
+anchor_bottom = 0.27312142
+placeholder_text = "Benutzername"
+right_icon = ExtResource("2_8pku0")
+metadata/_edit_use_anchors_ = true
+
+[node name="Email" type="LineEdit" parent="PanelContainer/register/authregister"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.28451177
+anchor_top = 0.29768786
+anchor_right = 0.6077441
+anchor_bottom = 0.34248558
+placeholder_text = "example@gmail.com"
+right_icon = ExtResource("3_u0mwq")
+metadata/_edit_use_anchors_ = true
+
+[node name="Mobilenummer" type="LineEdit" parent="PanelContainer/register/authregister"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.6212121
+anchor_top = 0.29768786
+anchor_right = 0.9444444
+anchor_bottom = 0.34248558
+placeholder_text = "Mobilenummer"
+right_icon = ExtResource("4_qrnjm")
+metadata/_edit_use_anchors_ = true
+
+[node name="Postleitzahl" type="LineEdit" parent="PanelContainer/register/authregister"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.28451177
+anchor_top = 0.4132948
+anchor_right = 0.43265992
+anchor_bottom = 0.45809248
+placeholder_text = "PLZ"
+metadata/_edit_use_anchors_ = true
+
+[node name="Stadt" type="LineEdit" parent="PanelContainer/register/authregister"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.45959595
+anchor_top = 0.4132948
+anchor_right = 0.7828283
+anchor_bottom = 0.45809248
+placeholder_text = "Stadt"
+metadata/_edit_use_anchors_ = true
+
+[node name="Hausnummer" type="LineEdit" parent="PanelContainer/register/authregister"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.28451177
+anchor_top = 0.48265895
+anchor_right = 0.43265992
+anchor_bottom = 0.52745664
+placeholder_text = "Hausnr."
+metadata/_edit_use_anchors_ = true
+
+[node name="Straßennamen" type="LineEdit" parent="PanelContainer/register/authregister"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.45959595
+anchor_top = 0.48265895
+anchor_right = 0.7828283
+anchor_bottom = 0.52745664
+placeholder_text = "Straßennamen"
+metadata/_edit_use_anchors_ = true
+
+[node name="Passwort" type="LineEdit" parent="PanelContainer/register/authregister"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.28451177
+anchor_top = 0.5982659
+anchor_right = 0.6077441
+anchor_bottom = 0.6430636
+placeholder_text = "Passwort"
+right_icon = ExtResource("5_n11dv")
+metadata/_edit_use_anchors_ = true
+
+[node name="Passwort_wiederholen" type="LineEdit" parent="PanelContainer/register/authregister"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.6212121
+anchor_top = 0.5982659
+anchor_right = 0.9444444
+anchor_bottom = 0.6430636
+placeholder_text = "Passwort wiederholen"
+right_icon = ExtResource("5_n11dv")
+metadata/_edit_use_anchors_ = true
+
+[node name="CreateAccount" type="Button" parent="PanelContainer/register/authregister"]
+layout_mode = 0
+anchor_left = 0.28451177
+anchor_top = 0.7369942
+anchor_right = 0.7154882
+anchor_bottom = 0.82947975
+text = "Account erstellen"
+metadata/_edit_use_anchors_ = true
+
+[node name="login" type="HSplitContainer" parent="PanelContainer"]
+visible = false
+layout_mode = 2
+split_offset = 500
+script = ExtResource("7_n11dv")
+
+[node name="Info" type="Panel" parent="PanelContainer/login"]
+layout_mode = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="Softwarename" type="Label" parent="PanelContainer/login/Info"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.058
+anchor_top = 0.06647399
+anchor_right = 0.942
+anchor_bottom = 0.33236995
+offset_bottom = -1.5258789e-05
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0.26666668, 0.2901961, 1, 1)
+theme_override_fonts/font = SubResource("SystemFont_u0mwq")
+theme_override_font_sizes/font_size = 150
+text = "ANVIRO"
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="authlogin" type="Panel" parent="PanelContainer/login"]
+layout_mode = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="Email" type="LineEdit" parent="PanelContainer/login/authlogin"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.28451177
+anchor_top = 0.27456647
+anchor_right = 0.7154882
+anchor_bottom = 0.3193642
+placeholder_text = "example@gmail.com"
+right_icon = ExtResource("3_u0mwq")
+metadata/_edit_use_anchors_ = true
+
+[node name="Passwort" type="LineEdit" parent="PanelContainer/login/authlogin"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.28451177
+anchor_top = 0.36705202
+anchor_right = 0.7154882
+anchor_bottom = 0.4118497
+placeholder_text = "Passwort"
+right_icon = ExtResource("5_n11dv")
+metadata/_edit_use_anchors_ = true
+
+[node name="Login" type="Button" parent="PanelContainer/login/authlogin"]
+layout_mode = 0
+anchor_left = 0.28451177
+anchor_top = 0.7369942
+anchor_right = 0.7154882
+anchor_bottom = 0.82947975
+text = "Anmelden"
+metadata/_edit_use_anchors_ = true
+
+[node name="HoldLogin" type="CheckBox" parent="PanelContainer/login/authlogin"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.28451177
+anchor_top = 0.43208092
+anchor_right = 0.71548826
+anchor_bottom = 0.48265895
+text = "Angemeldet bleiben"
+metadata/_edit_use_anchors_ = true
+
+[connection signal="pressed" from="PanelContainer/register/Info/Login" to="PanelContainer/register" method="_on_login_pressed"]
+[connection signal="pressed" from="PanelContainer/register/authregister/CreateAccount" to="PanelContainer/register" method="_on_create_account_pressed"]
+[connection signal="pressed" from="PanelContainer/login/authlogin/Login" to="PanelContainer/login" method="_on_login_pressed"]
