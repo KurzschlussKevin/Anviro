@@ -182,12 +182,33 @@ def login_user(
     )
 
 
-# --- Endpunkt für Godot Auto-Login Check ---
+@router.post("/logout")
+def logout(
+    authorization: str = Header(None), 
+    db: Session = Depends(get_db)
+):
+    if not authorization:
+         raise HTTPException(status_code=401, detail="Nicht eingeloggt")
+
+    token = authorization.replace("Bearer ", "")
+    
+    # Token suchen und deaktivieren
+    login_entry = db.query(UserLogin).filter(UserLogin.token == token).first()
+    
+    if login_entry:
+        login_entry.is_active = False
+        db.commit()
+        return {"msg": "Erfolgreich ausgeloggt"}
+    
+    return {"msg": "Token nicht gefunden oder bereits ausgeloggt"}
+
+# 2. /users/me anpassen (role_id hinzufügen)
 @router.get("/users/me")
 def read_users_me(current_user: User = Depends(get_current_user_from_token)):
     return {
         "id": current_user.id,
         "email": current_user.email,
         "username": current_user.username,
+        "role_id": current_user.role_id, # <--- NEU: Damit wir die Rolle anzeigen können
         "status": "valid"
     }
