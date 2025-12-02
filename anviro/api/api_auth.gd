@@ -1,4 +1,3 @@
-# res://scripts/api.gd (Beispielpfad)
 extends Node
 class_name API
 
@@ -9,6 +8,9 @@ const BASE_URL := "http://127.0.0.1:8000"
 const ENDPOINT_REGISTER := "/register"
 const ENDPOINT_LOGIN    := "/login"
 
+# Pfad zum Speichern der Geräte-ID
+const DEVICE_ID_FILE := "user://device.id"
+
 # Signale
 signal registration_completed(success: bool, message: String)
 signal login_completed(success: bool, message: String, user_id: int, token: String)
@@ -16,12 +18,16 @@ signal login_completed(success: bool, message: String, user_id: int, token: Stri
 var _http: HTTPRequest
 var _current_endpoint: String = ""
 var _busy: bool = false
-
+var _device_id: String = ""
 
 func _ready() -> void:
 	_http = HTTPRequest.new()
 	add_child(_http)
 	_http.request_completed.connect(_on_request_completed)
+	
+	# Beim Start sofort die Geräte-ID laden oder neu erstellen
+	_device_id = _get_or_create_device_id()
+	print("API: Dieses Gerät hat die ID: ", _device_id)
 
 
 # ==============================================================================
@@ -29,22 +35,6 @@ func _ready() -> void:
 # ==============================================================================
 
 func register_user(user_data: Dictionary) -> void:
-	# Erwartet z.B.:
-	# {
-	#   "salutation_id": 1,
-	#   "vorname": "Max",
-	#   "nachname": "Mustermann",
-	#   "benutzername": "maxi",
-	#   "email": "max@example.com",
-	#   "mobilnummer": "0123456789",
-	#   "postleitzahl": "12345",
-	#   "stadt": "Berlin",
-	#   "hausnr": "1a",
-	#   "strasse": "Hauptstraße",
-	#   "passwort": "geheim123",
-	#   "role_id": 1
-	# }
-
 	if _busy:
 		print("API: Anfrage läuft bereits, bitte warten.")
 		return
@@ -56,7 +46,7 @@ func register_user(user_data: Dictionary) -> void:
 	var headers := ["Content-Type: application/json"]
 	var body := JSON.stringify(user_data)
 
-	print("API: Sende Registrierung an: ", url, " body=", body)
+	print("API: Sende Registrierung an: ", url)
 
 	var err := _http.request(url, headers, HTTPClient.METHOD_POST, body)
 	if err != OK:
@@ -66,13 +56,10 @@ func register_user(user_data: Dictionary) -> void:
 
 
 # ==============================================================================
-# 2. LOGIN
+# 2. LOGIN (JETZT MIT GERÄTE-ERKENNUNG)
 # ==============================================================================
 
 func login_user(email: String, passwort: String, hold_login: bool = false) -> void:
-	# Backend erwartet:
-	# { "email": "…", "passwort": "…", "hold_login": true/false }
-
 	if _busy:
 		print("API: Anfrage läuft bereits, bitte warten.")
 		return
@@ -82,13 +69,21 @@ func login_user(email: String, passwort: String, hold_login: bool = false) -> vo
 
 	var url := BASE_URL + ENDPOINT_LOGIN
 	var headers := ["Content-Type: application/json"]
-	var body := JSON.stringify({
+	
+	# --- NEU: Wir senden jetzt Geräte-Infos mit ---
+	var body_data = {
 		"email": email,
 		"passwort": passwort,
 		"hold_login": hold_login,
-	})
+		# Die neuen Felder für dein Backend:
+		"device_id": _device_id,           # Unsere feste UUID
+		"device_name": _get_device_name(), # Z.B. "Mein PC" oder "Samsung S21"
+		"platform": OS.get_name()          # Z.B. "Windows", "Android", "Linux"
+	}
+	
+	var body := JSON.stringify(body_data)
 
-	print("API: Sende Login an: ", url, " body=", body)
+	print("API: Sende Login an: ", url, " mit DeviceID: ", _device_id)
 
 	var err := _http.request(url, headers, HTTPClient.METHOD_POST, body)
 	if err != OK:
@@ -98,7 +93,55 @@ func login_user(email: String, passwort: String, hold_login: bool = false) -> vo
 
 
 # ==============================================================================
-# 3. CALLBACK / RESPONSE HANDLING
+# 3. HELPER: UUID & GERÄTE-INFOS
+# ==============================================================================
+
+func _get_or_create_device_id() -> String:
+	# 1. Prüfen, ob wir schon eine ID haben
+	if FileAccess.file_exists(DEVICE_ID_FILE):
+		var file = FileAccess.open(DEVICE_ID_FILE, FileAccess.READ)
+		var saved_id = file.get_as_text()
+		if saved_id.length() > 10: # Einfacher Check ob gültig
+			return saved_id
+	
+	# 2. Wenn nicht, generieren wir eine neue UUID v4
+	var new_id = _generate_uuid_v4()
+	
+	# 3. Speichern für die Zukunft
+	var file = FileAccess.open(DEVICE_ID_FILE, FileAccess.WRITE)
+	file.store_string(new_id)
+	file.close()
+	
+	return new_id
+
+func _generate_uuid_v4() -> String:
+	# Godot hat keine native UUID Funktion, wir bauen eine Standard-konforme UUID v4
+	var crypto = Crypto.new()
+	var b = crypto.generate_random_bytes(16)
+	
+	# Setze Version (4) und Variant (RFC 4122) Bits
+	b[6] = (b[6] & 0x0f) | 0x40
+	b[8] = (b[8] & 0x3f) | 0x80
+	
+	# Formatierung: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+	return "%02x%02x%02x%02x-%02x%02x-%02x%02x-%02x%02x-%02x%02x%02x%02x%02x%02x" % [
+		b[0], b[1], b[2], b[3],
+		b[4], b[5],
+		b[6], b[7],
+		b[8], b[9],
+		b[10], b[11], b[12], b[13], b[14], b[15]
+	]
+
+func _get_device_name() -> String:
+	var model = OS.get_model_name()
+	if model == "GenericDevice": # Auf PCs oft "GenericDevice"
+		# Dann bauen wir uns was schöneres
+		return OS.get_distribution_name() + " PC" # Z.B. "Microsoft Windows 10 PC"
+	return model
+
+
+# ==============================================================================
+# 4. CALLBACK / RESPONSE HANDLING
 # ==============================================================================
 
 func _on_request_completed(

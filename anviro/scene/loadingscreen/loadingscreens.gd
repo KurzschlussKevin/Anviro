@@ -1,141 +1,151 @@
 extends Control
 
 # --- KONFIGURATION ---
-const SERVER_URL = "http://127.0.0.1:8000/health"
+const SERVER_URL_HEALTH = "http://127.0.0.1:8000/health"
+const SERVER_URL_VALIDATE = "http://127.0.0.1:8000/users/me" # <-- NEU: Validierungs-URL
 const TIMEOUT_SECONDS = 5.0
 
 # Szenen-Pfade
-const LOGIN_SCENE = "res://auth/auth_controlling.tscn"
+const LOGIN_SCENE = "res://auth/auth_controlling.tscn" # Pfad angepasst an dein Projekt
 const DASHBOARD_SCENE = "res://scene/dashboard/dashboard.tscn"
 
-# Speicher-Daten (Müssen EXAKT mit deinem Login-Script übereinstimmen!)
+# Speicher-Daten
 const SAVE_PATH = "user://user_profile.save"
-const ENC_KEY = "DeinGeheimesPasswortHier" # <-- WICHTIG: Das gleiche Passwort wie beim Speichern nutzen!
+const ENC_KEY = "DeinGeheimesPasswortHier" 
 
 # --- NODES ---
 @onready var loadinginfo: Label = $loadinginfo
 @onready var loadingbar: ProgressBar = $Loadingbar
 
-var http_request: HTTPRequest
+# Wir brauchen zwei Requests: Einen für Health, einen für Token-Check
+var http_health: HTTPRequest
+var http_validate: HTTPRequest
 var timeout_timer: Timer
-var check_completed: bool = false # Verhindert, dass Timer und HTTP gleichzeitig feuern
+var check_completed: bool = false 
 
 func _ready() -> void:
-	# UI Reset
 	loadinginfo.text = "Verbinde zum Server..."
-	loadinginfo.modulate = Color.WHITE
 	loadingbar.value = 10
 	
-	# HTTP Request erstellen
-	http_request = HTTPRequest.new()
-	add_child(http_request)
-	http_request.request_completed.connect(_on_server_check_completed)
+	# 1. Health Request erstellen
+	http_health = HTTPRequest.new()
+	add_child(http_health)
+	http_health.request_completed.connect(_on_health_check_completed)
 	
-	# Timeout Timer erstellen
+	# 2. Validate Request erstellen (NEU)
+	http_validate = HTTPRequest.new()
+	add_child(http_validate)
+	http_validate.request_completed.connect(_on_token_validation_completed)
+	
+	# Timer erstellen
 	timeout_timer = Timer.new()
 	timeout_timer.wait_time = TIMEOUT_SECONDS
 	timeout_timer.one_shot = true
 	timeout_timer.timeout.connect(_on_timeout)
 	add_child(timeout_timer)
 	
-	# Starten
-	check_server_connection()
+	start_check()
 
-func check_server_connection() -> void:
-	print("DEBUG: Starte Verbindungsversuch...")
-	timeout_timer.start() # Timer läuft los (5 Sek)
-	var error = http_request.request(SERVER_URL)
-	
-	if error != OK:
-		# Falls Hardware-Fehler sofort abbrechen
-		_handle_connection_result(false)
+func start_check() -> void:
+	timeout_timer.start()
+	http_health.request(SERVER_URL_HEALTH)
 
-# --- EVENT: Server antwortet (bevor die 5 Sek um sind) ---
-func _on_server_check_completed(result: int, response_code: int, _headers: PackedStringArray, _body: PackedByteArray) -> void:
-	if check_completed: return # Falls Timer schon zugeschlagen hat -> ignorieren
+# --- SCHRITT 1: Ist der Server überhaupt da? ---
+func _on_health_check_completed(result: int, response_code: int, _headers: PackedStringArray, _body: PackedByteArray) -> void:
+	if check_completed: return
+	timeout_timer.stop()
 	
-	timeout_timer.stop() # Timer stoppen
-	
-	var is_online = (result == HTTPRequest.RESULT_SUCCESS and response_code == 200)
-	
-	if is_online:
+	if result == HTTPRequest.RESULT_SUCCESS and response_code == 200:
 		print("DEBUG: Server ist ONLINE.")
 		_handle_connection_result(true)
 	else:
-		print("DEBUG: Server antwortet nicht korrekt (Code: ", response_code, ")")
+		print("DEBUG: Server nicht erreichbar (Code: ", response_code, ")")
 		_handle_connection_result(false)
 
-# --- EVENT: 5 Sekunden sind um (Server hat nicht geantwortet) ---
 func _on_timeout() -> void:
 	if check_completed: return
-	
-	print("DEBUG: Timeout! Keine Antwort nach 5 Sekunden.")
-	http_request.cancel_request() # Laufenden Request abbrechen
-	_handle_connection_result(false) # Wir behandeln das als "Offline"
+	print("DEBUG: Timeout!")
+	http_health.cancel_request()
+	_handle_connection_result(false)
 
-# --- HAUPTLOGIK: Entscheiden, wohin es geht ---
+# --- SCHRITT 2: Entscheiden was wir tun ---
 func _handle_connection_result(is_online: bool) -> void:
-	check_completed = true # Markieren, dass wir fertig sind
+	check_completed = true
+	loadingbar.value = 50
 	
-	# Wir prüfen JETZT die Speicherdatei
-	var saved_data = load_encrypted_hold_status()
-	var has_save_file = saved_data["exists"]
+	# Daten lesen (jetzt mit Token!)
+	var saved_data = load_encrypted_data()
+	var has_file = saved_data["exists"]
 	var hold_active = saved_data["hold"]
-	
-	loadingbar.value = 100
+	var token = saved_data["token"]
 	
 	if is_online:
-		# --- FALL: ONLINE ---
-		loadinginfo.text = "Verbunden!"
-		await get_tree().create_timer(0.5).timeout
+		loadinginfo.text = "Prüfe Benutzerdaten..."
 		
-		if has_save_file and hold_active:
-			print("ONLINE & HOLD ACTIVE -> Gehe zum Dashboard (Auto-Login)")
-			# Hier könntest du theoretisch den Token noch schnell beim Server validieren
-			ChangeScene.switch_scene(DASHBOARD_SCENE, false)
+		# WICHTIG: Hier ändern wir die Logik!
+		if has_file and hold_active and token != "":
+			# Statt direkt ins Dashboard zu gehen, prüfen wir das Token!
+			validate_token_on_server(token)
 		else:
-			print("ONLINE & KEIN HOLD -> Gehe zum Login")
+			print("Online, aber kein Auto-Login -> Login Screen")
 			ChangeScene.switch_scene(LOGIN_SCENE, false)
 			
 	else:
-		# --- FALL: OFFLINE (oder Timeout) ---
-		if has_save_file and hold_active:
+		# Offline Logik
+		if has_file and hold_active:
 			loadinginfo.text = "Offline Modus..."
 			await get_tree().create_timer(1.0).timeout
-			print("OFFLINE & HOLD ACTIVE -> Gehe zum Dashboard (Offline-Modus)")
 			ChangeScene.switch_scene(DASHBOARD_SCENE, false)
 		else:
-			# Offline und kein Auto-Login -> Fehlermeldung anzeigen und BLEIBEN
-			print("OFFLINE & KEIN HOLD -> Fehler anzeigen")
 			_show_offline_message("Verbindungsfehler (Offline)")
 
-# --- HILFSFUNKTION: Liest die Datei aus ---
-func load_encrypted_hold_status() -> Dictionary:
-	# Standard-Rückgabe, falls nichts da ist
-	var result = {"exists": false, "hold": false}
+# --- SCHRITT 3: Token beim Server prüfen (NEU) ---
+func validate_token_on_server(token: String) -> void:
+	print("DEBUG: Validiere Token beim Backend...")
+	var headers = ["Authorization: Bearer " + token]
+	# Wir senden an /users/me
+	http_validate.request(SERVER_URL_VALIDATE, headers, HTTPClient.METHOD_GET)
+
+func _on_token_validation_completed(result: int, response_code: int, _headers: PackedStringArray, _body: PackedByteArray) -> void:
+	loadingbar.value = 100
+	
+	# Wenn Server 200 sagt, ist is_active=True in der DB
+	if result == HTTPRequest.RESULT_SUCCESS and response_code == 200:
+		print("DEBUG: Token gültig -> Dashboard")
+		loadinginfo.text = "Willkommen zurück!"
+		await get_tree().create_timer(0.5).timeout
+		ChangeScene.switch_scene(DASHBOARD_SCENE, false)
+	else:
+		# Wenn Server 401 sagt (weil is_active=False), landen wir hier
+		print("DEBUG: Token ungültig/gesperrt (Code: ", response_code, ") -> Login")
+		loadinginfo.text = "Sitzung abgelaufen."
+		
+		# WICHTIG: Die ungültige Datei löschen, damit er nicht in einer Loop hängt
+		if FileAccess.file_exists(SAVE_PATH):
+			DirAccess.remove_absolute(SAVE_PATH)
+			
+		await get_tree().create_timer(1.0).timeout
+		ChangeScene.switch_scene(LOGIN_SCENE, false)
+
+# --- Hilfsfunktionen ---
+func load_encrypted_data() -> Dictionary:
+	var result = {"exists": false, "hold": false, "token": ""}
 	
 	if not FileAccess.file_exists(SAVE_PATH):
 		return result
 		
-	# Datei verschlüsselt öffnen
 	var file = FileAccess.open_encrypted_with_pass(SAVE_PATH, FileAccess.READ, ENC_KEY)
 	if file == null:
-		printerr("Fehler beim Lesen der verschlüsselten Datei (Passwort falsch?)")
 		return result
 		
 	var content = file.get_as_text()
 	var json = JSON.new()
-	var error = json.parse(content)
-	
-	if error == OK:
+	if json.parse(content) == OK:
 		var data = json.data
-		# Prüfen ob "hold" im JSON true ist
-		if data.has("hold") and data["hold"] == true:
+		if typeof(data) == TYPE_DICTIONARY:
 			result["exists"] = true
-			result["hold"] = true
-		elif data.has("hold") and data["hold"] == false:
-			result["exists"] = true
-			result["hold"] = false
+			result["hold"] = data.get("hold", false)
+			result["token"] = data.get("token", "") # Token mit auslesen!
 			
 	return result
 
@@ -143,4 +153,3 @@ func _show_offline_message(msg: String) -> void:
 	loadinginfo.text = msg
 	loadinginfo.modulate = Color.RED
 	loadingbar.value = 0
-	# Optional: Button einblenden zum erneuten Versuchen
