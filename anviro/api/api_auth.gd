@@ -7,6 +7,8 @@ const BASE_URL := "http://127.0.0.1:8000"
 # Endpunkte
 const ENDPOINT_REGISTER := "/register"
 const ENDPOINT_LOGIN    := "/login"
+const ENDPOINT_USER_ME  := "/users/me"
+const ENDPOINT_LOGOUT   := "/logout"
 
 # Pfad zum Speichern der Geräte-ID
 const DEVICE_ID_FILE := "user://device.id"
@@ -14,11 +16,14 @@ const DEVICE_ID_FILE := "user://device.id"
 # Signale
 signal registration_completed(success: bool, message: String)
 signal login_completed(success: bool, message: String, user_id: int, token: String)
+signal user_data_received(success: bool, data: Dictionary)
+signal logout_completed(success: bool)
 
 var _http: HTTPRequest
 var _current_endpoint: String = ""
 var _busy: bool = false
 var _device_id: String = ""
+
 
 func _ready() -> void:
 	_http = HTTPRequest.new()
@@ -56,7 +61,7 @@ func register_user(user_data: Dictionary) -> void:
 
 
 # ==============================================================================
-# 2. LOGIN (JETZT MIT GERÄTE-ERKENNUNG)
+# 2. LOGIN (MIT GERÄTE-ERKENNUNG)
 # ==============================================================================
 
 func login_user(email: String, passwort: String, hold_login: bool = false) -> void:
@@ -70,15 +75,14 @@ func login_user(email: String, passwort: String, hold_login: bool = false) -> vo
 	var url := BASE_URL + ENDPOINT_LOGIN
 	var headers := ["Content-Type: application/json"]
 	
-	# --- NEU: Wir senden jetzt Geräte-Infos mit ---
+	# Wir senden jetzt Geräte-Infos mit
 	var body_data = {
 		"email": email,
 		"passwort": passwort,
 		"hold_login": hold_login,
-		# Die neuen Felder für dein Backend:
 		"device_id": _device_id,           # Unsere feste UUID
-		"device_name": _get_device_name(), # Z.B. "Mein PC" oder "Samsung S21"
-		"platform": OS.get_name()          # Z.B. "Windows", "Android", "Linux"
+		"device_name": _get_device_name(), # Z.B. "Mein PC"
+		"platform": OS.get_name()          # Z.B. "Windows"
 	}
 	
 	var body := JSON.stringify(body_data)
@@ -93,7 +97,34 @@ func login_user(email: String, passwort: String, hold_login: bool = false) -> vo
 
 
 # ==============================================================================
-# 3. HELPER: UUID & GERÄTE-INFOS
+# 3. DASHBOARD FUNKTIONEN (NEU)
+# ==============================================================================
+
+func fetch_user_data(token: String) -> void:
+	if _busy: return
+	_busy = true
+	_current_endpoint = ENDPOINT_USER_ME
+	
+	var url := BASE_URL + ENDPOINT_USER_ME
+	var headers := ["Authorization: Bearer " + token]
+	
+	print("API: Hole User-Daten...")
+	_http.request(url, headers, HTTPClient.METHOD_GET)
+
+
+func logout_user(token: String) -> void:
+	_busy = true # Kurz sperren, auch wenn wir das Ergebnis nicht zwingend brauchen
+	_current_endpoint = ENDPOINT_LOGOUT
+	
+	var url := BASE_URL + ENDPOINT_LOGOUT
+	var headers := ["Authorization: Bearer " + token]
+	
+	print("API: Sende Logout...")
+	_http.request(url, headers, HTTPClient.METHOD_POST)
+
+
+# ==============================================================================
+# 4. HELPER: UUID & GERÄTE-INFOS
 # ==============================================================================
 
 func _get_or_create_device_id() -> String:
@@ -101,7 +132,7 @@ func _get_or_create_device_id() -> String:
 	if FileAccess.file_exists(DEVICE_ID_FILE):
 		var file = FileAccess.open(DEVICE_ID_FILE, FileAccess.READ)
 		var saved_id = file.get_as_text()
-		if saved_id.length() > 10: # Einfacher Check ob gültig
+		if saved_id.length() > 10: 
 			return saved_id
 	
 	# 2. Wenn nicht, generieren wir eine neue UUID v4
@@ -115,7 +146,6 @@ func _get_or_create_device_id() -> String:
 	return new_id
 
 func _generate_uuid_v4() -> String:
-	# Godot hat keine native UUID Funktion, wir bauen eine Standard-konforme UUID v4
 	var crypto = Crypto.new()
 	var b = crypto.generate_random_bytes(16)
 	
@@ -123,25 +153,20 @@ func _generate_uuid_v4() -> String:
 	b[6] = (b[6] & 0x0f) | 0x40
 	b[8] = (b[8] & 0x3f) | 0x80
 	
-	# Formatierung: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
 	return "%02x%02x%02x%02x-%02x%02x-%02x%02x-%02x%02x-%02x%02x%02x%02x%02x%02x" % [
-		b[0], b[1], b[2], b[3],
-		b[4], b[5],
-		b[6], b[7],
-		b[8], b[9],
-		b[10], b[11], b[12], b[13], b[14], b[15]
+		b[0], b[1], b[2], b[3], b[4], b[5], b[6], b[7],
+		b[8], b[9], b[10], b[11], b[12], b[13], b[14], b[15]
 	]
 
 func _get_device_name() -> String:
 	var model = OS.get_model_name()
-	if model == "GenericDevice": # Auf PCs oft "GenericDevice"
-		# Dann bauen wir uns was schöneres
-		return OS.get_distribution_name() + " PC" # Z.B. "Microsoft Windows 10 PC"
+	if model == "GenericDevice": 
+		return OS.get_distribution_name() + " PC" 
 	return model
 
 
 # ==============================================================================
-# 4. CALLBACK / RESPONSE HANDLING
+# 5. CALLBACK / RESPONSE HANDLING
 # ==============================================================================
 
 func _on_request_completed(
@@ -162,13 +187,21 @@ func _on_request_completed(
 		else:
 			data = {"msg": "Ungültige Serverantwort."}
 	else:
+		# Bei Logout ist eine leere Antwort okay (wenn Status 200)
 		data = {"msg": "Leere Serverantwort."}
 
+	# Verteiler für die verschiedenen Anfragen
 	match _current_endpoint:
 		ENDPOINT_REGISTER:
 			_handle_register_response(response_code, data)
 		ENDPOINT_LOGIN:
 			_handle_login_response(response_code, data)
+		ENDPOINT_USER_ME:
+			var success = response_code == 200
+			user_data_received.emit(success, data)
+		ENDPOINT_LOGOUT:
+			# Beim Logout ist uns der Body fast egal, solange der Code 200 ist
+			logout_completed.emit(response_code == 200)
 		_:
 			print("API: Unbekannter Endpoint in Antwort: ", _current_endpoint)
 

@@ -1,11 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://dosndiqdeyb2t"]
 
 [ext_resource type="PackedScene" uid="uid://cl08rs4umd7yi" path="res://utils/main_template.tscn" id="1_5saw4"]
-[ext_resource type="Script" uid="uid://0rtu2vj3uiol" path="res://scene/dashboard/dashboard.gd" id="2_dta8j"]
+[ext_resource type="Script" uid="uid://y02wl0jdfdy" path="res://scene/dashboard/dashboard.gd" id="2_dta8j"]
 
 [node name="Dashboard" instance=ExtResource("1_5saw4")]
 script = ExtResource("2_dta8j")
-
-[connection signal="pressed" from="Personalinfos" to="." method="_on_personalinfos_pressed"]
-[connection signal="pressed" from="Personalinfos/UserInfos/LogOut" to="." method="_on_log_out_pressed"]
-[connection signal="pressed" from="Personalinfos/UserInfos/Close" to="." method="_on_close_pressed"]

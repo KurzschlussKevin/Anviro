@@ -1,5 +1,6 @@
-[gd_scene load_steps=11 format=3 uid="uid://cl08rs4umd7yi"]
+[gd_scene load_steps=12 format=3 uid="uid://cl08rs4umd7yi"]
 
+[ext_resource type="Script" uid="uid://0rtu2vj3uiol" path="res://utils/main_template.gd" id="1_2fsbo"]
 [ext_resource type="Texture2D" uid="uid://bpyawxscth4iq" path="res://assets/test.jpg" id="1_poh2f"]
 [ext_resource type="Texture2D" uid="uid://chdxm7pq3rj8g" path="res://assets/icons/kreisbenutzer.png" id="2_eacsa"]
 [ext_resource type="Texture2D" uid="uid://b5v8gt0vqj5li" path="res://assets/icons/kreuz.png" id="3_cyks8"]
@@ -21,6 +22,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_2fsbo")
 
 [node name="Background" type="TextureRect" parent="."]
 layout_mode = 1
@@ -187,3 +189,7 @@ icon = ExtResource("7_unwu2")
 layout_mode = 2
 text = "Administrator"
 icon = ExtResource("8_xihd3")
+
+[connection signal="pressed" from="Personalinfos" to="." method="_on_personalinfos_pressed"]
+[connection signal="pressed" from="Personalinfos/UserInfos/LogOut" to="." method="_on_log_out_pressed"]
+[connection signal="pressed" from="Personalinfos/UserInfos/Close" to="." method="_on_close_pressed"]
