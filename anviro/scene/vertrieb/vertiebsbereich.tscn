@@ -1,6 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://8cwtxhcmyfyi"]
+[gd_scene load_steps=5 format=3 uid="uid://8cwtxhcmyfyi"]
 
 [ext_resource type="PackedScene" uid="uid://cl08rs4umd7yi" path="res://utils/main_template.tscn" id="1_d3cbh"]
+[ext_resource type="Script" uid="uid://bll1q1k82tae1" path="res://scene/vertrieb/vertiebsbereich.gd" id="2_3isbb"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_d3cbh"]
 bg_color = Color(0.3882353, 0.6117647, 0.8901961, 0.36078432)
@@ -17,6 +18,7 @@ corner_radius_bottom_left = 50
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_3isbb"]
 
 [node name="Vertiebsbereich" instance=ExtResource("1_d3cbh")]
+script = ExtResource("2_3isbb")
 
 [node name="KundenTemplate" type="PanelContainer" parent="." index="3"]
 custom_minimum_size = Vector2(448, 416)
