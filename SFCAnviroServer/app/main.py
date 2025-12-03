@@ -2,23 +2,25 @@ from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 
-# Diese Imports setzen voraus, dass deine Ordnerstruktur (app/core/..., app/db/...) existiert
+# Konfiguration und Datenbank
 from app.core.config import settings
 from app.db.session import engine, Base
-from app.routers import users
-from app.routers import users, customers
 
-# Modelle importieren, damit SQLAlchemy sie kennt
+# --- ROUTER IMPORTS ---
+# Hier importieren wir alle API-Bereiche
+from app.routers import users, customers, sales_router
+
+# Modelle importieren, damit SQLAlchemy sie kennt und Tabellen erstellt
 import app.models  # noqa: F401
 
-# Tabellen erstellen (falls sie noch nicht existieren)
+# Tabellen in der Datenbank erstellen (falls noch nicht vorhanden)
 Base.metadata.create_all(bind=engine)
 
 # App Initialisierung
 app = FastAPI(title="Anviro Backend")
 
 # --- CORS KONFIGURATION ---
-# Wichtig, falls du das Spiel später als Web-Build veröffentlichst
+# Erlaubt Zugriff von Godot (oder Webbrowsern) auf die API
 app.add_middleware(
     CORSMiddleware,
     allow_origins=settings.BACKEND_CORS_ORIGINS,
@@ -28,7 +30,7 @@ app.add_middleware(
 )
 
 # --- GLOBALER FEHLER-HANDLER ---
-# Fängt Abstürze ab und gibt sauberes JSON zurück
+# Fängt unerwartete Abstürze ab und sendet sauberes JSON zurück
 @app.exception_handler(Exception)
 async def global_exception_handler(request: Request, exc: Exception):
     return JSONResponse(
@@ -36,17 +38,12 @@ async def global_exception_handler(request: Request, exc: Exception):
         content={"detail": f"Interner Serverfehler: {exc}"},
     )
 
-# --- ENDPUNKTE ---
+# --- BASIS ENDPUNKTE ---
 
-# 1. Health-Check
-# Diesen Endpunkt ruft dein Godot Loading-Screen auf!
-# URL: http://127.0.0.1:8000/health
 @app.get("/health")
 def health_check():
     return {"status": "ok", "message": "Service is running"}
 
-# 2. Root (Startseite)
-# Optional: Damit du im Browser bei http://127.0.0.1:8000/ keinen 404 Fehler bekommst
 @app.get("/")
 def read_root():
     return {
@@ -55,7 +52,8 @@ def read_root():
         "health_check": "/health"
     }
 
-# 3. Router einbinden
-# Hier sind deine Login und Register Funktionen drin
-app.include_router(users.router)
-app.include_router(customers.router)
+# --- ROUTER EINBINDEN ---
+# Hier schalten wir die verschiedenen API-Bereiche scharf
+app.include_router(users.router)          # Login, Register, Logout
+app.include_router(customers.router)      # Kundenverwaltung (GET)
+app.include_router(sales_router.router)   # Vertrieb (Kunde anlegen + Auftrag)
