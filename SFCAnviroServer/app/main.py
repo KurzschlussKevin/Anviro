@@ -6,6 +6,7 @@ from fastapi.responses import JSONResponse
 from app.core.config import settings
 from app.db.session import engine, Base
 from app.routers import users
+from app.routers import users, customers
 
 # Modelle importieren, damit SQLAlchemy sie kennt
 import app.models  # noqa: F401
@@ -57,3 +58,4 @@ def read_root():
 # 3. Router einbinden
 # Hier sind deine Login und Register Funktionen drin
 app.include_router(users.router)
+app.include_router(customers.router)
