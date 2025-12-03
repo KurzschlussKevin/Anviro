@@ -19,12 +19,14 @@ config/icon="res://icon.svg"
 
 ApiAuth="*res://api/api_auth.gd"
 ChangeScene="*res://addons/Scenen Switcher/SceneSwitcher.gd"
+ApiCustomers="*res://api/api_customers.gd"
 
 [display]
 
 window/size/viewport_width=1920
 window/size/viewport_height=1080
 window/size/mode=2
+window/stretch/mode="canvas_items"
 
 [rendering]
 

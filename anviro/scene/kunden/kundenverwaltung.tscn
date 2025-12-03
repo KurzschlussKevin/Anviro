@@ -1,6 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://cf8fx1iy3sfhc"]
+[gd_scene load_steps=7 format=3 uid="uid://cf8fx1iy3sfhc"]
 
 [ext_resource type="PackedScene" uid="uid://cl08rs4umd7yi" path="res://utils/main_template.tscn" id="1_ic4v2"]
+[ext_resource type="Script" uid="uid://cbyipkhscjtel" path="res://scene/kunden/kundenverwaltung.gd" id="2_3155o"]
 [ext_resource type="Texture2D" uid="uid://b1v5dp5spbltr" path="res://assets/icons/user/bleistift.png" id="5_a0frt"]
 [ext_resource type="Texture2D" uid="uid://cyj23066lh80j" path="res://assets/icons/user/mull.png" id="6_25ej2"]
 
@@ -19,6 +20,7 @@ corner_radius_bottom_left = 50
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_hacb7"]
 
 [node name="Kundenverwaltung" instance=ExtResource("1_ic4v2")]
+script = ExtResource("2_3155o")
 
 [node name="SearchKunden" type="LineEdit" parent="." index="3"]
 layout_mode = 1
