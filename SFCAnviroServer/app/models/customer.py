@@ -14,6 +14,7 @@ class Customer(Base):
     nachname = Column(Text, nullable=False)
     email = Column(Text, nullable=True)
     telefon = Column(Text, nullable=True)
+    mobile = Column(Text, nullable=True)
     
     # Adresse
     strasse = Column(Text, nullable=True)

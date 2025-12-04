@@ -8,6 +8,7 @@ class CustomerBase(BaseModel):
     nachname: str
     email: Optional[EmailStr] = None
     telefon: Optional[str] = None
+    mobile: Optional[str] = None
     strasse: Optional[str] = None
     hausnummer: Optional[str] = None
     plz: Optional[str] = None
