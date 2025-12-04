@@ -1,34 +1,25 @@
--- Table: anviro.customers
+-- Table: anviro.sales
 
--- DROP TABLE IF EXISTS anviro.customers;
+-- DROP TABLE IF EXISTS anviro.sales;
 
-CREATE TABLE IF NOT EXISTS anviro.customers
+CREATE TABLE IF NOT EXISTS anviro.sales
 (
-    id bigint NOT NULL DEFAULT nextval('anviro.customers_id_seq'::regclass),
-    company text COLLATE pg_catalog."default" NOT NULL,
-    customer_number text COLLATE pg_catalog."default" NOT NULL,
-    postal_code text COLLATE pg_catalog."default",
-    city text COLLATE pg_catalog."default",
-    house_number text COLLATE pg_catalog."default",
-    street text COLLATE pg_catalog."default",
-    contact_name text COLLATE pg_catalog."default",
-    email text COLLATE pg_catalog."default",
-    phone text COLLATE pg_catalog."default",
-    mobile text COLLATE pg_catalog."default",
-    created_at timestamp with time zone NOT NULL DEFAULT now(),
-    CONSTRAINT customers_pkey PRIMARY KEY (id),
-    CONSTRAINT customers_customer_number_key UNIQUE (customer_number)
+    id bigint NOT NULL DEFAULT nextval('anviro.sales_id_seq'::regclass),
+    customer_id bigint NOT NULL,
+    user_id bigint NOT NULL,
+    created_at timestamp with time zone DEFAULT now(),
+    CONSTRAINT sales_pkey PRIMARY KEY (id),
+    CONSTRAINT fk_sales_customer FOREIGN KEY (customer_id)
+        REFERENCES anviro.customers (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT fk_sales_user FOREIGN KEY (user_id)
+        REFERENCES anviro.users (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
 )
 
 TABLESPACE pg_default;
 
-ALTER TABLE IF EXISTS anviro.customers
+ALTER TABLE IF EXISTS anviro.sales
     OWNER to postgres;
--- Index: idx_customers_customer_number
-
--- DROP INDEX IF EXISTS anviro.idx_customers_customer_number;
-
-CREATE INDEX IF NOT EXISTS idx_customers_customer_number
-    ON anviro.customers USING btree
-    (customer_number COLLATE pg_catalog."default" ASC NULLS LAST)
-    TABLESPACE pg_default;
