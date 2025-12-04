@@ -51,14 +51,15 @@ func _ready() -> void:
 func _on_kunden_speichern_pressed() -> void:
 	var data = {
 		"kundennummer": inp_kdnr.text,
-		"vorname": inp_ap.text, # Nutzen wir AP als Name für Demo
-		"nachname": inp_firma.text, # Firma als Nachname für Demo
+		"vorname": inp_ap.text,
+		"nachname": inp_firma.text,
 		"stadt": inp_stadt.text,
 		"plz": inp_plz.text,
 		"strasse": inp_strasse.text,
 		"hausnr": inp_hausnr.text,
 		"email": inp_email.text if inp_email.text != "" else null,
-		"telefon": inp_tel.text if inp_tel.text != "" else null
+		"telefon": inp_tel.text if inp_tel.text != "" else null,
+		"mobile": inp_mobile.text if inp_mobile.text != "" else null
 	}
 	
 	ApiCustomers.create_customer(current_token, data)

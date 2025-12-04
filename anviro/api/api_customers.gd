@@ -50,6 +50,12 @@ func create_customer(token: String, customer_data: Dictionary) -> void:
 func _on_request_completed(result: int, response_code: int, _headers: PackedStringArray, body: PackedByteArray) -> void:
 	_busy = false
 	var text = body.get_string_from_utf8()
+	
+	# --- DEBUG PRINT ---
+	print("API CUSTOMERS RESPONSE: Code=", response_code)
+	print("BODY: ", text)
+	# -------------------
+
 	var json = JSON.new()
 	var parse_result = json.parse(text)
 	
@@ -59,17 +65,19 @@ func _on_request_completed(result: int, response_code: int, _headers: PackedStri
 	
 	match _current_task:
 		"fetch_all":
+			# Prüfen ob es wirklich ein Array ist
 			if response_code == 200 and typeof(data) == TYPE_ARRAY:
+				print("ApiCustomers: Daten erfolgreich geladen. Anzahl: ", data.size())
 				customers_loaded.emit(true, data)
 			else:
-				print("ApiCustomers Fehler: ", response_code)
+				print("ApiCustomers Fehler beim Laden! Code: ", response_code)
 				customers_loaded.emit(false, [])
 		
 		"create":
 			var success = response_code == 200 or response_code == 201
 			var msg = "Erfolg"
 			if typeof(data) == TYPE_DICTIONARY:
-				msg = data.get("detail", "Unbekannter Fehler")
+				msg = data.get("detail", str(data.get("msg", "Unbekannter Fehler")))
 			customer_created.emit(success, msg)
 			
 	_current_task = ""

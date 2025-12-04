@@ -169,7 +169,29 @@ theme_override_font_sizes/font_size = 12
 emoji_menu_enabled = false
 drag_and_drop_selection_enabled = false
 
-[node name="KundenEmail" type="HBoxContainer" parent="KundenTemplate/KundenTemplate" index="6"]
+[node name="KundenAPNamen" type="HBoxContainer" parent="KundenTemplate/KundenTemplate" index="6"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.08371041
+anchor_top = 0.40487805
+anchor_right = 0.52291423
+anchor_bottom = 0.46585366
+metadata/_edit_use_anchors_ = true
+
+[node name="Lable" type="Label" parent="KundenTemplate/KundenTemplate/KundenAPNamen" index="0"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+text = "Ansprechspartner:"
+metadata/_edit_use_anchors_ = true
+
+[node name="LineEdit" type="LineEdit" parent="KundenTemplate/KundenTemplate/KundenAPNamen" index="1"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 12
+emoji_menu_enabled = false
+drag_and_drop_selection_enabled = false
+
+[node name="KundenEmail" type="HBoxContainer" parent="KundenTemplate/KundenTemplate" index="7"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.08371041
@@ -191,7 +213,7 @@ theme_override_font_sizes/font_size = 12
 emoji_menu_enabled = false
 drag_and_drop_selection_enabled = false
 
-[node name="KundenTelefon" type="HBoxContainer" parent="KundenTemplate/KundenTemplate" index="7"]
+[node name="KundenTelefon" type="HBoxContainer" parent="KundenTemplate/KundenTemplate" index="8"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.08371041
@@ -213,7 +235,7 @@ theme_override_font_sizes/font_size = 12
 emoji_menu_enabled = false
 drag_and_drop_selection_enabled = false
 
-[node name="KundenMobile" type="HBoxContainer" parent="KundenTemplate/KundenTemplate" index="8"]
+[node name="KundenMobile" type="HBoxContainer" parent="KundenTemplate/KundenTemplate" index="9"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.08371041
@@ -235,7 +257,7 @@ theme_override_font_sizes/font_size = 12
 emoji_menu_enabled = false
 drag_and_drop_selection_enabled = false
 
-[node name="KundenSpeichern" type="Button" parent="KundenTemplate/KundenTemplate" index="9"]
+[node name="KundenSpeichern" type="Button" parent="KundenTemplate/KundenTemplate" index="10"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.4024677
@@ -246,28 +268,6 @@ grow_horizontal = 2
 grow_vertical = 0
 text = "Nur Kunde Speichern"
 metadata/_edit_use_anchors_ = true
-
-[node name="KundenAPNamen" type="HBoxContainer" parent="KundenTemplate/KundenTemplate" index="10"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.08371041
-anchor_top = 0.40487805
-anchor_right = 0.52291423
-anchor_bottom = 0.46585366
-metadata/_edit_use_anchors_ = true
-
-[node name="Lable" type="Label" parent="KundenTemplate/KundenTemplate/KundenAPNamen" index="0"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 16
-text = "Ansprechspartner:"
-metadata/_edit_use_anchors_ = true
-
-[node name="LineEdit" type="LineEdit" parent="KundenTemplate/KundenTemplate/KundenAPNamen" index="1"]
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_font_sizes/font_size = 12
-emoji_menu_enabled = false
-drag_and_drop_selection_enabled = false
 
 [node name="PanelContainer" type="PanelContainer" parent="." index="4"]
 layout_mode = 1

@@ -38,8 +38,8 @@ layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.16822916
 anchor_top = 0.14351852
-anchor_right = 0.63854164
-anchor_bottom = 0.79537034
+anchor_right = 0.7682292
+anchor_bottom = 0.9092592
 offset_bottom = 6.1035156e-05
 horizontal_scroll_mode = 3
 vertical_scroll_mode = 3
@@ -52,7 +52,7 @@ size_flags_vertical = 3
 columns = 2
 
 [node name="KundenTemplate" type="PanelContainer" parent="ScrollContainer/GridContainer" index="0"]
-custom_minimum_size = Vector2(448, 416)
+custom_minimum_size = Vector2(500, 500)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_lk7by")
 metadata/_edit_use_anchors_ = true
@@ -79,7 +79,7 @@ metadata/_edit_use_anchors_ = true
 [node name="LineEdit" type="LineEdit" parent="ScrollContainer/GridContainer/KundenTemplate/KundenTemplate/Kundenname" index="1"]
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_font_sizes/font_size = 12
+theme_override_font_sizes/font_size = 15
 editable = false
 emoji_menu_enabled = false
 drag_and_drop_selection_enabled = false
@@ -102,7 +102,7 @@ metadata/_edit_use_anchors_ = true
 [node name="LineEdit" type="LineEdit" parent="ScrollContainer/GridContainer/KundenTemplate/KundenTemplate/Kundennummer" index="1"]
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_font_sizes/font_size = 12
+theme_override_font_sizes/font_size = 15
 editable = false
 emoji_menu_enabled = false
 drag_and_drop_selection_enabled = false
@@ -125,7 +125,7 @@ metadata/_edit_use_anchors_ = true
 [node name="LineEdit" type="LineEdit" parent="ScrollContainer/GridContainer/KundenTemplate/KundenTemplate/Kundenplz" index="1"]
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_font_sizes/font_size = 12
+theme_override_font_sizes/font_size = 15
 alignment = 1
 editable = false
 emoji_menu_enabled = false
@@ -149,7 +149,7 @@ metadata/_edit_use_anchors_ = true
 [node name="LineEdit" type="LineEdit" parent="ScrollContainer/GridContainer/KundenTemplate/KundenTemplate/Kundenstadt" index="1"]
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_font_sizes/font_size = 12
+theme_override_font_sizes/font_size = 15
 editable = false
 emoji_menu_enabled = false
 drag_and_drop_selection_enabled = false
@@ -172,36 +172,13 @@ metadata/_edit_use_anchors_ = true
 [node name="LineEdit" type="LineEdit" parent="ScrollContainer/GridContainer/KundenTemplate/KundenTemplate/Kundenhausnummer" index="1"]
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_font_sizes/font_size = 12
+theme_override_font_sizes/font_size = 15
 alignment = 1
 editable = false
 emoji_menu_enabled = false
 drag_and_drop_selection_enabled = false
 
-[node name="KundenAPNamen" type="HBoxContainer" parent="ScrollContainer/GridContainer/KundenTemplate/KundenTemplate" index="5"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.08371041
-anchor_top = 0.40487805
-anchor_right = 0.9343891
-anchor_bottom = 0.46585366
-metadata/_edit_use_anchors_ = true
-
-[node name="Lable" type="Label" parent="ScrollContainer/GridContainer/KundenTemplate/KundenTemplate/KundenAPNamen" index="0"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 16
-text = "Ansprechspartner:"
-metadata/_edit_use_anchors_ = true
-
-[node name="LineEdit" type="LineEdit" parent="ScrollContainer/GridContainer/KundenTemplate/KundenTemplate/KundenAPNamen" index="1"]
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_font_sizes/font_size = 12
-editable = false
-emoji_menu_enabled = false
-drag_and_drop_selection_enabled = false
-
-[node name="Kundenstrasse" type="HBoxContainer" parent="ScrollContainer/GridContainer/KundenTemplate/KundenTemplate" index="6"]
+[node name="Kundenstrasse" type="HBoxContainer" parent="ScrollContainer/GridContainer/KundenTemplate/KundenTemplate" index="5"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.4276018
@@ -219,7 +196,30 @@ metadata/_edit_use_anchors_ = true
 [node name="LineEdit" type="LineEdit" parent="ScrollContainer/GridContainer/KundenTemplate/KundenTemplate/Kundenstrasse" index="1"]
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_font_sizes/font_size = 12
+theme_override_font_sizes/font_size = 15
+editable = false
+emoji_menu_enabled = false
+drag_and_drop_selection_enabled = false
+
+[node name="KundenAPNamen" type="HBoxContainer" parent="ScrollContainer/GridContainer/KundenTemplate/KundenTemplate" index="6"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.08371041
+anchor_top = 0.40487805
+anchor_right = 0.9343891
+anchor_bottom = 0.46585366
+metadata/_edit_use_anchors_ = true
+
+[node name="Lable" type="Label" parent="ScrollContainer/GridContainer/KundenTemplate/KundenTemplate/KundenAPNamen" index="0"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+text = "Ansprechspartner:"
+metadata/_edit_use_anchors_ = true
+
+[node name="LineEdit" type="LineEdit" parent="ScrollContainer/GridContainer/KundenTemplate/KundenTemplate/KundenAPNamen" index="1"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 15
 editable = false
 emoji_menu_enabled = false
 drag_and_drop_selection_enabled = false
@@ -242,7 +242,7 @@ metadata/_edit_use_anchors_ = true
 [node name="LineEdit" type="LineEdit" parent="ScrollContainer/GridContainer/KundenTemplate/KundenTemplate/KundenEmail" index="1"]
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_font_sizes/font_size = 12
+theme_override_font_sizes/font_size = 15
 editable = false
 emoji_menu_enabled = false
 drag_and_drop_selection_enabled = false
@@ -265,7 +265,7 @@ metadata/_edit_use_anchors_ = true
 [node name="LineEdit" type="LineEdit" parent="ScrollContainer/GridContainer/KundenTemplate/KundenTemplate/KundenTelefon" index="1"]
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_font_sizes/font_size = 12
+theme_override_font_sizes/font_size = 15
 editable = false
 emoji_menu_enabled = false
 drag_and_drop_selection_enabled = false
@@ -288,7 +288,7 @@ metadata/_edit_use_anchors_ = true
 [node name="LineEdit" type="LineEdit" parent="ScrollContainer/GridContainer/KundenTemplate/KundenTemplate/KundenMobile" index="1"]
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_font_sizes/font_size = 12
+theme_override_font_sizes/font_size = 15
 editable = false
 emoji_menu_enabled = false
 drag_and_drop_selection_enabled = false
