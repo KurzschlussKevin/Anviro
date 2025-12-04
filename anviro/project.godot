@@ -21,6 +21,7 @@ ApiAuth="*res://api/api_auth.gd"
 ChangeScene="*res://addons/Scenen Switcher/SceneSwitcher.gd"
 ApiCustomers="*res://api/api_customers.gd"
 ApiSales="*res://api/api_sales.gd"
+Global="*res://utils/global.gd"
 
 [display]
 

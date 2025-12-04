@@ -60,7 +60,6 @@ layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_cci7s")
 
 [node name="UserTemplate" type="Panel" parent="ScrollContainer/GridContainer/UserTemplate" index="0"]
-visible = false
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxEmpty_rl2x7")
 
@@ -157,6 +156,7 @@ icon = ExtResource("7_ainlu")
 metadata/_edit_use_anchors_ = true
 
 [node name="UserSettingsTemplate" type="Panel" parent="ScrollContainer/GridContainer/UserTemplate" index="1"]
+visible = false
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxEmpty_rl2x7")
 
